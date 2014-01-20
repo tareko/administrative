@@ -1,0 +1,25 @@
+---
+- name: Backup old GNU Mailman
+  hosts: mailman_old
+#  remote_user: tarek
+  sudo: yes
+  vars:
+    old_mailman_dir: /var/lib/mailman
+    old_mailman_backup: /root
+    backup_filename: "{{ansible_date_time.date}}-mailman.tar.bz2"
+
+  roles:
+    - mailman_old
+
+- name: Install GNU Mailman on new system
+  hosts: mailman
+#  remote_user: tarek
+  sudo: yes
+
+  vars:
+    old_mailman_dir: /var/lib/mailman
+    old_mailman_backup: /root
+    backup_filename: "{{ansible_date_time.date}}-mailman.tar.bz2"
+
+  roles:
+    - mailman

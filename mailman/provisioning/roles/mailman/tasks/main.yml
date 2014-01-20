@@ -1,0 +1,10 @@
+---
+# This playbook will install OJS
+
+- name: Install mailman
+  action: apt pkg={{ item }} state=present
+  with_items:
+    - mailman
+
+- name: Copy and uncompress old backup
+  unarchive: src={{backup_filename}} dest=/var/lib/mailman

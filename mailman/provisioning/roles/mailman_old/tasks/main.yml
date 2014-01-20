@@ -1,0 +1,9 @@
+---
+# This playbook will backup old mailman and fetch the files
+
+- name: Create mailman backup
+  shell: tar cpjf {{old_mailman_backup}}/{{backup_filename}} {{old_mailman_dir}}/data {{old_mailman_dir}}/archives {{old_mailman_dir}}/lists
+
+
+- name: Fetch mailman backup
+  fetch: src={{old_mailman_backup}}/{{backup_filename}} dest={{backup_filename}} flat=yes
