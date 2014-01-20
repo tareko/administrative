@@ -8,3 +8,6 @@
   action: apt pkg={{ item }} state=present
   with_items:
    - phpmyadmin
+
+- name: Create soft link for phpMyAdmin
+  command: ln -sf /usr/share/phpmyadmin /var/www/phpmyadmin

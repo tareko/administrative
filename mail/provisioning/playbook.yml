@@ -6,5 +6,10 @@
   hosts: all
 
   roles:
-    - dovecot
+    - base
+    - web
+    - db
     - postfix
+    - dovecot
+    - postgrey
+    - roundcube

@@ -7,3 +7,4 @@
    - roundcube
    - roundcube-plugins
 
+- command: ln -sf /usr/share/roundcube /var/www/roundcube

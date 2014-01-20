@@ -6,3 +6,13 @@
   with_items:
    - postfix
    - postfix-mysql
+   - python-mysqldb
+
+- name: Create Postfix Database
+  mysql_db: name=mailserver state=present
+
+- name: Create Postfix DB User
+  mysql_user: name=mailserver password=mailserver priv=mailserver.*:SELECT host='localhost' state=present
+
+- copy: src=setup.sql dest=/tmp/setup.sql
+- shell: mysql -u mailserver -pmailserver mailserver < /tmp/setup.sql
