@@ -1,5 +1,6 @@
 ---
-# This playbook will install a mail-server
+# This playbook will install a mail-server.
+# Based on: https://workaround.org/ispmail/wheezy
 
 - name: Install mail server
   hosts: all

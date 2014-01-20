@@ -1,2 +1,9 @@
 ---
 # This role will install and configure dovecot
+
+- name: Install Dovecot
+  action: apt pkg={{ item }} state=present
+  with_items:
+   - dovecot-managesieved
+   - dovecot-mysql
+   - dovecot-imapd

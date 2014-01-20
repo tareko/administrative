@@ -1,0 +1,10 @@
+---
+# This role will setup the base installation
+
+- name: Remove exim4
+  apt: pkg=exim4 state=absent
+
+- name: Install base packages
+  action: apt pkg={{ item }} state=present
+  with_items:
+   - phpmyadmin

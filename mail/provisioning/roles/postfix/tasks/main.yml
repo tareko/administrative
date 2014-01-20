@@ -1,2 +1,8 @@
 ---
 # This role will install and configure postfix
+
+- name: Install Postfix
+  action: apt pkg={{ item }} state=present
+  with_items:
+   - postfix
+   - postfix-mysql

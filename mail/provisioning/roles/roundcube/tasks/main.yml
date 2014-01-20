@@ -1,0 +1,9 @@
+---
+# This role will install and configure Roundcube
+
+- name: Install Roundcube
+  action: apt pkg={{ item }} state=present
+  with_items:
+   - roundcube
+   - roundcube-plugins
+
