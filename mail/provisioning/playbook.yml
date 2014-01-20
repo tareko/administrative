@@ -1,0 +1,9 @@
+---
+# This playbook will install a mail-server
+
+- name: Install mail server
+  hosts: all
+
+  roles:
+    - dovecot
+    - postfix
