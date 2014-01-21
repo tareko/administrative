@@ -7,3 +7,23 @@
    - dovecot-managesieved
    - dovecot-mysql
    - dovecot-imapd
+
+- name: Add virtual mail group
+  group: name=vmail state=present
+
+- name: Add virtual mail user
+  user: name=vmail group=vmail shell=/bin/false home=/var/vmail createhome=yes
+
+- name: Fix Dovecot configuration
+  lineinfile: dest=/etc/dovecot/conf.d/10-auth.conf regexp='^#?!include auth\-system\.conf\.ext' line='#!include auth-system.conf.ext'
+- lineinfile: dest=/etc/dovecot/conf.d/10-auth.conf regexp='^#?\!include auth\-sql\.conf\.ext' line='!include auth-sql.conf.ext'
+- template: src=auth-sql.conf.ext.j2 dest=/etc/dovecot/conf.d/auth-sql.conf.ext
+- lineinfile: dest=/etc/dovecot/conf.d/10-mail.conf regexp='^mail_location' line='mail_location = maildir:/var/vmail/%d/%n/Maildir'
+- template: src=10-master.conf.j2 dest=/etc/dovecot/conf.d/10-master.conf
+- lineinfile: dest=/etc/dovecot/conf.d/15-lda.conf regexp="^.*#?mail_plugins" line='  mail_plugins = $mail_plugins sieve'
+- template: src=dovecot-sql.conf.ext.j2 dest=/etc/dovecot/dovecot-sql.conf.ext
+
+- name: Fix configuration permissions
+  file: path=/etc/dovecot/dovecot.conf owner=root group=vmail mode=0644
+- file: path=/etc/dovecot/dovecot-sql.conf.ext owner=root group=root mode=0600
+- service: name=dovecot state=restarted
