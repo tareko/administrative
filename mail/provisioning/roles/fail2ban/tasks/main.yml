@@ -1,0 +1,4 @@
+---
+# This role will install and configure Fail2ban for postfix and dovecot
+# From: https://workaround.org/ispmail/wheezy/sysadmin-niceties
+
