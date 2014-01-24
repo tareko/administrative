@@ -7,4 +7,10 @@
    - roundcube
    - roundcube-plugins
 
-- command: ln -sf /usr/share/roundcube /var/www/roundcube
+- file: src=/usr/share/roundcube dest=/var/www/roundcube state=link
+
+- shell: cp /usr/share/roundcube/plugins/managesieve/config.inc.php.dist /etc/roundcube/plugins/managesieve/config.inc.php
+
+- lineinfile: dest=/usr/share/roundcube/plugins/managesieve/config.inc.php regexp='^.*managesieve_port' line="$rcmail_config['managesieve_port'] = 4190;"
+
+- lineinfile: dest=/etc/roundcube/main.inc.php regexp="^.*rcmail_config\[\'plugins\'\]" line="$rcmail_config['plugins'] = array('carddav', 'managesieve', 'password');"

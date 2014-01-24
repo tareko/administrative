@@ -41,8 +41,7 @@
 - shell: postconf -e smtpd_tls_auth_only=yes
 - shell: postconf -e smtpd_tls_cert_file=/etc/ssl/certs/mailserver.pem
 - shell: postconf -e smtpd_tls_key_file=/etc/ssl/private/mailserver.pem
-- shell: postconf -e smtpd_recipient_restrictions="permit_mynetworks, permit_sasl_authenticated, reject_unauth_destination"
-
+- shell: postconf -e smtpd_recipient_restrictions="permit_mynetworks, permit_sasl_authenticated, reject_unauth_pipelining, reject_rbl_client bl.spamcop.net, reject_rbl_client zen.spamhaus.org, reject_unknown_client_hostname, reject_unknown_sender_domain, reject_unauth_destination"
 - script: postfix-add-dovecot.sh
 
 - service: name=postfix state=restarted

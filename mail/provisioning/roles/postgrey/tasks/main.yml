@@ -1,2 +1,9 @@
 ---
 # This role will install and configure postgrey
+
+- name: Install Postgrey packages
+  action: apt pkg={{ item }} state=present
+  with_items:
+   - postgrey
+
+- name: Configure Postgrey
