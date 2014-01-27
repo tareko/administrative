@@ -22,6 +22,9 @@
 - name: Return mailserver user privileges
   mysql_user: name=mailserver password=mailserver priv=mailserver.*:SELECT host='localhost' state=present
 
+- name: Create mailpass user and set privileges
+  mysql_user: name=mailpass password=mailserver priv=mailserver.*:SELECT,UPDATE host='localhost' state=present
+
 
 - name: Upload configuration templates
   template: src=mysql-virtual-mailbox-domains.cf.j2 dest=/etc/postfix/mysql-virtual-mailbox-domains.cf owner=root group=root mode=0644
