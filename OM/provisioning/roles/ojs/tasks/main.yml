@@ -10,6 +10,7 @@
     - libtext-unidecode-perl
     - libbiblio-citation-parser-perl
     - php5-curl
+    - php5-xsl
 
 - name: Install OJS
   get_url: url=http://pkp.sfu.ca/ojs/download/ojs-2.4.3.tar.gz dest=/var/www/ojs-2.4.3.tar.gz
@@ -36,3 +37,7 @@
 - file: path=/var/www/ojs-2.4.3/cache/_db owner=www-data group=www-data
 - file: path=/var/files owner=www-data group=www-data
 - copy: src=config.inc.php dest=/var/www/ojs-2.4.3/config.inc.php owner=www-data group=www-data
+
+- name: Copy NLM-related files
+  copy: src=nlm-ref-list-30-to-23.xsl dest=:/var/www/ojs-2.4.3/lib/pkp/plugins/metadata/nlm30/filter/nlm30-to-23-ref-list.xsl
+- copy: src=nlm.tpl dest=:/var/www/ojs-2.4.3/lib/pkp/plugins/metadata/nlm30/filter/nlm30-ref-list.tpl
