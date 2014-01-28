@@ -1,5 +1,5 @@
 ---
-- name: Install Web and SQL
+- name: Install OJS setup
   hosts: all
 
   roles:

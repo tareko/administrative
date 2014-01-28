@@ -3,7 +3,7 @@
 
 - name: Update and upgrade apt
   apt: update_cache=yes
-  apt: upgrade=dist
+-  apt: upgrade=dist
 
 - name: Install base software
   action: apt pkg={{ item }} state=present

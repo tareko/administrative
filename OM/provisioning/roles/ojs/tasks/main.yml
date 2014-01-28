@@ -9,22 +9,25 @@
     - libhtml-parser-perl
     - libtext-unidecode-perl
     - libbiblio-citation-parser-perl
+    - php5-curl
 
 - name: Install OJS
   get_url: url=http://pkp.sfu.ca/ojs/download/ojs-2.4.3.tar.gz dest=/var/www/ojs-2.4.3.tar.gz
 - command: tar xf /var/www/ojs-2.4.3.tar.gz -C /var/www
 
 - name: Create OJS Database
-  mysql_db: name=ojs state=present
+  copy: src=ojs.sql dest=/tmp/ojs.sql
+-  mysql_db: name=ojs state=present
 
 - name: Create OJS DB User
   mysql_user: name=ojs password=ojs priv=ojs.*:ALL host='localhost' state=present
+
+-  mysql_db: login_user=ojs login_password=ojs name=ojs state=import target=/tmp/ojs.sql
 
 #Create files directory
 - shell: mkdir -p /var/files
 
 # Set all permissions correctly
-- file: path=/var/www/ojs-2.4.3/config.inc.php owner=www-data group=www-data
 - file: path=/var/www/ojs-2.4.3/public owner=www-data group=www-data
 - file: path=/var/www/ojs-2.4.3/cache owner=www-data group=www-data
 - file: path=/var/www/ojs-2.4.3/cache/t_cache owner=www-data group=www-data
@@ -32,3 +35,4 @@
 - file: path=/var/www/ojs-2.4.3/cache/t_compile owner=www-data group=www-data
 - file: path=/var/www/ojs-2.4.3/cache/_db owner=www-data group=www-data
 - file: path=/var/files owner=www-data group=www-data
+- copy: src=config.inc.php dest=/var/www/ojs-2.4.3/config.inc.php owner=www-data group=www-data
