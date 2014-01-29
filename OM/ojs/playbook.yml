@@ -1,0 +1,9 @@
+---
+- name: Install OJS development environment
+  hosts: localhost
+  vars:
+    install_dir: /home/orangey/workspace/administrative/OM/ojs/code
+#- connection: local
+
+  roles:
+    - ojs

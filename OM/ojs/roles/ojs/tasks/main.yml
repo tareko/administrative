@@ -1,0 +1,19 @@
+---
+# This playbook will setup the OJS development environment via GIT
+
+- name: Install OJS dependencies
+  action: apt pkg={{ item }} state=present
+  with_items:
+    - git
+
+- name: Get OJS Git files
+  git: repo=git@github.com:OpenMedicine/ojs.git
+       dest={{ install_dir }}
+
+- name: Set upstreams
+  shell: cd {{ install_dir }}; if ! `git remote | grep -q upstream` ; then git remote add upstream git@github.com:pkp/ojs.git ; fi
+
+- shell: cd {{ install_dir }}/lib/pkp; if ! `git remote | grep -q upstream` ; then git remote add upstream git@github.com:pkp/pkp-lib.git ; fi
+
+#- name: Set up branches to track properly
+
