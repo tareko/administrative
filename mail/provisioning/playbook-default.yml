@@ -34,3 +34,6 @@
 
     MAT_admin_user: AdminUser1
     MAT_admin_pass: AdminPassword1
+    
+    mysql_login: mysql-superuser
+    mysql_pass: password

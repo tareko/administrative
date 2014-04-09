@@ -19,4 +19,4 @@
 
 - lineinfile: dest=/etc/roundcube/plugins/password/config.inc.php regexp="^.*rcmail_config\[\'password_query\'\]" line="$rcmail_config['password_query'] = 'UPDATE virtual_users SET `password` = MD5(%p) where `email` = %u';"
 
-- lineinfile: dest=/etc/roundcube/plugins/password/config.inc.php regexp="^.*rcmail_config\[\'password_db_dsn\'\]" line="$rcmail_config['password_db_dsn'] = 'mysql://mailpass:mailserver@127.0.0.1/mailserver';"
+- lineinfile: dest=/etc/roundcube/plugins/password/config.inc.php regexp="^.*rcmail_config\[\'password_db_dsn\'\]" line="$rcmail_config['password_db_dsn'] = 'mysql://{{ mailpass_user }}:{{ mailpass_pass }}@{{ mailserver_host }}/{{ mailserver_db }}';"

@@ -2,18 +2,6 @@
 # This role will install and configure the Mail Admin Tool
 # From: http://mat.ssdata.dk/
 
-- name: Install Ruby dependency
-  action: apt pkg={{ item }} state=present
-  with_items:
-   - ruby
-   - ruby-rack
-   - ruby-mysql
-   - libmysql-ruby
-   - libmysqlclient-dev
-   - bundler
-   - rake
-   - libapache2-mod-passenger
-
 - name: Download file
   get_url: url=http://mat.ssdata.dk/files/MATv1.2.1.tar.gz dest=/opt/
   
