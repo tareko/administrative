@@ -20,14 +20,14 @@
 - name: Uncompress file
   command: tar xf /opt/MATv1.2.1.tar.gz -C /opt
 
+- name: Create Admin User for db with all privileges
+  mysql_user: name={{ mailadmin_user }} password={{ mailadmin_pass }} priv={{ mailserver_db }}.*:ALL host='localhost' state=present
+
 - name: Fix configuration file
-  lineinfile: dest=/opt/posty_webui/conf.js regexp="^.*serverUrl" line="var serverUrl = 'https://admin.tarek.org/posty_api';"
- 
-- name: Create mysql user for posty
-  mysql_user: name=mailposty password=mailposty priv=mailserver.*:ALL host='localhost' state=present
+  lineinfile: dest=/opt/MATv1.2.1/includes/config.php regexp="^.*DB_USER" line="        define('DB_USER', '{{ mailadmin_user }}'); //user for mysql must have SELECT, INSERT, UPDATE, DELETE rights to the mailserver database!"
 
-- template: src=database.yml.j2 dest=/opt/posty_api/config/database.yml owner=root group=root mode=0644
+- lineinfile: dest=/opt/MATv1.2.1/includes/config.php regexp="^.*DB_PASS" line="        define('DB_PASSWORD', '{{ mailadmin_pass }}'); //password for mysql"
 
-- file: src=/opt/posty_webui dest=/home/web/admin/posty state=link
+- lineinfile: dest=/opt/MATv1.2.1/includes/config.php regexp="^.*username" line="        define('username', '{{ MAT_admin_user }}'); //username to access the site"
 
-- command: a2enmod passenger
+- lineinfile: dest=/opt/MATv1.2.1/includes/config.php regexp="^.*password" line="        define('password', '{{ MAT_admin_pass }}'); //password to access the site"

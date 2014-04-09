@@ -9,21 +9,21 @@
    - python-mysqldb
 
 - name: Create Postfix Database
-  mysql_db: name=mailserver state=present
+  mysql_db: name={{ mailserver_db }} state=present
 
 - name: Create Postfix DB User with all privileges
-  mysql_user: name={{ mailserver_user }} password={{ mailserver_password }} priv=mailserver.*:ALL host='localhost' state=present
+  mysql_user: name={{ mailserver_user }} password={{ mailserver_pass }} priv={{ mailserver_db }}.*:ALL host='localhost' state=present
 
 - name: Upload and install SQL schema
   copy: src=setup.sql dest=/tmp/setup.sql
 
-- shell: mysql -u {{ mailserver_user }} -p{{ mailserver_password }} mailserver < /tmp/setup.sql
+- shell: mysql -u {{ mailserver_user }} -p{{ mailserver_pass }} {{ mailserver_db }} < /tmp/setup.sql
 
 - name: Return mailserver user privileges
-  mysql_user: name={{ mailserver_user }} password={{ mailserver_password }} priv=mailserver.*:SELECT host='localhost' state=present
+  mysql_user: name={{ mailserver_user }} password={{ mailserver_pass }} priv={{ mailserver_db }}.*:SELECT host='localhost' state=present
 
 - name: Create mailpass user and set privileges
-  mysql_user: name={{ mailpass_user }} password={{ mailpass_password }} priv=mailserver.*:SELECT,UPDATE host='localhost' state=present
+  mysql_user: name={{ mailpass_user }} password={{ mailpass_pass }} priv={{ mailserver_db }}.*:SELECT,UPDATE host='localhost' state=present
 
 
 - name: Upload configuration templates

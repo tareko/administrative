@@ -1,5 +1,5 @@
-user = mailserver
-password = mailserver
-hosts = 127.0.0.1
-dbname = mailserver
+user = {{ mailserver_user }}
+password = {{ mailserver_pass }}
+hosts = {{ mailserver_host }}
+dbname = {{ mailserver_db }}
 query = SELECT 1 FROM virtual_domains WHERE name='%s'

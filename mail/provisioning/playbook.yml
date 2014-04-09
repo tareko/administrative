@@ -6,24 +6,31 @@
   hosts: all
 
   roles:
-#    - base
-#    - web
-#    - db
-#    - postfix
-#    - dovecot
+    - base
+    - web
+    - db
+    - postfix
+    - dovecot
     - mailadmintool
-#    - roundcube
+    - roundcube
 
 # Variables to customize for your server. Avoid keeping these generic
   vars:
+    # Database
+    mailserver_host: 127.0.0.1
+    mailserver_db: mailserver
+    
     # Username for the mailserver user
-    mailserver_username: mailserver
-    mailserver_password: mailserver
+    mailserver_user: mailserver
+    mailserver_pass: mailserver
 
     # Username for mailpass user with privileges to change user passwords
     mailpass_user: mailpass
-    mailpass_password: mailpass
+    mailpass_pass: mailpass
     
     # Mail administration tool
+    mailadmin_user: mailadmin
+    mailadmin_pass: mailadmin
+
     MAT_admin_user: AdminUser1
     MAT_admin_pass: AdminPassword1
