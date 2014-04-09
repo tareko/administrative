@@ -6,10 +6,25 @@
   hosts: all
 
   roles:
-    - base
-    - web
-    - db
-    - postfix
-    - dovecot
-#    - postgrey
-    - roundcube
+#    - base
+#    - web
+#    - db
+#    - postfix
+#    - dovecot
+#    - posty # WAY too much work for a ruby install...
+    - mailadmintool
+#    - roundcube
+
+# Variables to customize for your server. Avoid keeping these generic
+  vars:
+    # Username for the mailserver user
+    mailserver_username: mailserver
+    mailserver_password: mailserver
+
+    # Username for mailpass user with privileges to change user passwords
+    mailpass_user: mailpass
+    mailpass_password: mailpass
+    
+    # Mail administration tool
+    MAT_admin_user: AdminUser1
+    MAT_admin_pass: AdminPassword1

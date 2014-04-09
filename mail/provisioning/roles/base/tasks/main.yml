@@ -14,6 +14,11 @@
   action: apt pkg={{ item }} state=present
   with_items:
    - phpmyadmin
+   - git
 
 - name: Create soft link for phpMyAdmin
   command: ln -sf /usr/share/phpmyadmin /var/www/phpmyadmin
+
+- name: Add github's SSH key
+  command: mkdir -p /root/.ssh
+- copy: src=known_hosts dest=/root/.ssh/known_hosts owner=root group=root mode=0600

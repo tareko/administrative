@@ -12,18 +12,18 @@
   mysql_db: name=mailserver state=present
 
 - name: Create Postfix DB User with all privileges
-  mysql_user: name=mailserver password=mailserver priv=mailserver.*:ALL host='localhost' state=present
+  mysql_user: name={{ mailserver_user }} password={{ mailserver_password }} priv=mailserver.*:ALL host='localhost' state=present
 
 - name: Upload and install SQL schema
   copy: src=setup.sql dest=/tmp/setup.sql
 
-- shell: mysql -u mailserver -pmailserver mailserver < /tmp/setup.sql
+- shell: mysql -u {{ mailserver_user }} -p{{ mailserver_password }} mailserver < /tmp/setup.sql
 
 - name: Return mailserver user privileges
-  mysql_user: name=mailserver password=mailserver priv=mailserver.*:SELECT host='localhost' state=present
+  mysql_user: name={{ mailserver_user }} password={{ mailserver_password }} priv=mailserver.*:SELECT host='localhost' state=present
 
 - name: Create mailpass user and set privileges
-  mysql_user: name=mailpass password=mailserver priv=mailserver.*:SELECT,UPDATE host='localhost' state=present
+  mysql_user: name={{ mailpass_user }} password={{ mailpass_password }} priv=mailserver.*:SELECT,UPDATE host='localhost' state=present
 
 
 - name: Upload configuration templates

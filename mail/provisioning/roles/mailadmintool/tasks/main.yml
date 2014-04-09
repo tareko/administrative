@@ -1,12 +1,6 @@
 ---
-# This role will install and configure Posty
-# From: https://github.com/posty/posty_webui and https://github.com/posty/posty_api
-
-- name: Add Phusion key
-  command: apt-key adv --keyserver keyserver.ubuntu.com --recv-keys 561F9B9CAC40B2F7
-
-- name: Add Phusion repository
-  apt_repository: repo='deb https://oss-binaries.phusionpassenger.com/apt/passenger wheezy main' state=present
+# This role will install and configure the Mail Admin Tool
+# From: http://mat.ssdata.dk/
 
 - name: Install Ruby dependency
   action: apt pkg={{ item }} state=present
@@ -20,8 +14,11 @@
    - rake
    - libapache2-mod-passenger
 
-- git: repo=git://github.com/posty/posty_api.git dest=/opt/posty_api
-- git: repo=git://github.com/posty/posty_webui.git dest=/opt/posty_webui
+- name: Download file
+  get_url: url=http://mat.ssdata.dk/files/MATv1.2.1.tar.gz dest=/opt/
+  
+- name: Uncompress file
+  command: tar xf /opt/MATv1.2.1.tar.gz -C /opt
 
 - name: Fix configuration file
   lineinfile: dest=/opt/posty_webui/conf.js regexp="^.*serverUrl" line="var serverUrl = 'https://admin.tarek.org/posty_api';"
