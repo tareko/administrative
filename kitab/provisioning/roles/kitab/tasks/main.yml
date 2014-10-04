@@ -1,0 +1,7 @@
+---
+# This task will install Kitab and update to git
+
+- name: Install Kitab and update to git
+  git: repo=git://foosball.example.org/path/to/repo.git
+       dest=/vagrant/kitab
+       accept_hostkey=yes
